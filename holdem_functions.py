@@ -6,7 +6,9 @@ hand_rankings = ("High Card", "Pair", "Two Pair", "Three of a Kind",
                  "Straight", "Flush", "Full House", "Four of a Kind",
                  "Straight Flush", "Royal Flush")
 suit_value_dict = {"T": 10, "J": 11, "Q": 12, "K": 13, "A": 14}
-for num in xrange(2, 10):
+
+
+for num in range(2, 10):
     suit_value_dict[str(num)] = num
 
 class Card:
@@ -56,7 +58,7 @@ def generate_random_boards(deck, num_iterations, board_length):
     import random
     import time
     random.seed(time.time())
-    for _ in xrange(num_iterations):
+    for _ in range(num_iterations):
         yield random.sample(deck, 5 - board_length)
 
 # Generate all possible boards
@@ -250,19 +252,34 @@ def compare_hands(result_list):
 # Print results
 def print_results(hole_cards, winner_list, result_histograms):
     float_iterations = float(sum(winner_list))
-    print "Winning Percentages:"
+    print("Winning Percentages:")
     for index, hole_card in enumerate(hole_cards):
         winning_percentage = float(winner_list[index + 1]) / float_iterations
         if hole_card == (None, None):
-            print "(?, ?) : ", winning_percentage
+            print ("(?, ?) : ", winning_percentage)
         else:
-            print hole_card, ": ", winning_percentage
-    print "Ties: ", float(winner_list[0]) / float_iterations, "\n"
+            print (hole_card, ": ", winning_percentage)
+    print ("Ties: ", float(winner_list[0]) / float_iterations, "\n")
+    print_histogram(result_histograms, float_iterations)
+
+
+def print_histogram(result_histograms, float_iterations):
     for player_index, histogram in enumerate(result_histograms):
-        print "Player" + str(player_index + 1) + " Histogram: "
+        print ("Player" + str(player_index + 1) + " Histogram: ")
         for index, elem in enumerate(histogram):
-            print hand_rankings[index], ": ", float(elem) / float_iterations
-        print
+            print (hand_rankings[index], ": ", float(elem) / float_iterations)
+        print("")
+
+def calc_histogram(result_histograms, winner_list):
+    float_iterations = float(sum(winner_list))
+    players_hist = []
+    for player_index, histogram in enumerate(result_histograms):
+        hist = {}
+        for index, elem in enumerate(histogram):
+            hist.update({hand_rankings[index] : float(elem) / float_iterations})
+        players_hist.append(hist)
+    return(players_hist)
+        
 
 # Returns the winning percentages
 def find_winning_percentage(winner_list):
@@ -271,7 +288,9 @@ def find_winning_percentage(winner_list):
     for num_wins in winner_list:
         winning_percentage = float(num_wins) / float_iterations
         percentages.append(winning_percentage)
-    return percentages
+    return {'tie':percentages[0], 
+             'win':percentages[1],
+             'lose':percentages[2]}
 
 # Populate provided data structures with results from simulation
 def find_winner(generate_boards, deck, hole_cards, num, board_length,
