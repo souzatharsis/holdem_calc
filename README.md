@@ -11,7 +11,7 @@ If you want to use Holdem Calculator as a library, you can import holdem_calc an
 1. board: These are the community cards supplied to the calculation. This is in the form of a list of strings, with each string representing a card. If you do not want to specify community cards, you can set board to be None. Example: ["As", "Ks", "Jd"]
 2. exact_calculation: This is a boolean which is True if you want an exact calculation, and False if you want a Monte Carlo simulation.
 4. num_sims: This is the number of iterations run in the Monte Carlo simulation. Note that this parameter is ignored if Exact is set to True. This number must be positive, even if Exact is set to true.
-5. Input File: The name of the input file you want Holdem Calculator to read from. Mark as None, if you do not wish to read from a file. **If Input File is set, library calls will not return anything.**
+5. Input File: The name of the input file you want Holdem Calculator to read from. Mark as None, if you do not wish to read from a file. If Input File is set, library calls will not return anything.
 4. hero_hand: This is an object of the type Combo (part of Poker.Hand), which represents the Player's hand
 3. villan_hand: This is an object of the type Combo (part of Poker.Hand). None if no prior knowledge is known about the villan
 7. verbose: This is a boolean which is True if you want Holdem Calculator to return the odds of the villan making a certain poker hand, e.g., quads, set, straight. It only supports heads-up scenario.
