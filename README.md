@@ -53,4 +53,4 @@ In this notebook, we show how to represent basic poker elements in Python, e.g.,
 ## Backlog
 
 1. Add multiplayer support when verbose = True
-2. Port holdem_calc from string-based to proper Poker.Hand entities (Hand, Combo, Range) elements
+2. Port holdem_calc from string-based to proper Poker.Hand objects (Hand, Combo, Range)
