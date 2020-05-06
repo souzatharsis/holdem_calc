@@ -3,28 +3,45 @@ Poker Holdem Calculator
 
 The Holdem Calculator library calculates the probability that a certain Texas Hold'em hand will win. This probability is approximated by running a Monte Carlo method or calculated exactly by simulating the set of all possible hands. The Holdem Calculator also shows how likely each set of hole cards is to make a certain poker hand. The default Monte Carlo simulations are generally accurate to the nearest percent. Accuracy can be improved by increasing the number of simulations that are run, but this will result in a longer running time.
 
+This repository extends the implementation from ktseng/holdem_calc as it allows for odds calculation for poker hand ranges by levering the Python package **poker** which provides a framework for poker-related operations and entities such as Hands, Combos and Ranges.
+
 ## Usage
-If you want to use Holdem Calculator as a library, you can import holdem_calc or parallel_holdem_calc and call calculate(). The order of arguments to calculate() are as follows:
+If you want to use Holdem Calculator as a library, you can import holdem_calc and call calculate_odds_villan(). The order of arguments to calculate_odds_villan() are as follows:
 
-1. Board: These are the community cards supplied to the calculation. This is in the form of a list of strings, with each string representing a card. If you do not want to specify community cards, you can set board to be None. Example: ["As", "Ks", "Jd"]
-2. Exact: This is a boolean which is True if you want an exact calculation, and False if you want a Monte Carlo simulation.
-3. Number of Simulations: This is the number of iterations run in the Monte Carlo simulation. Note that this parameter is ignored if Exact is set to True. **This number must be positive, even if Exact is set to true.**
-4. Input File: The name of the input file you want Holdem Calculator to read from. Mark as None, if you do not wish to read from a file. **If Input File is set, library calls will not return anything.**
-5. Hole Cards: These are the hole cards for each of the players. This is in the form of a list of strings, with each string representing a card. Example: ["As", "Ks", "Jd", "Td"]
-6. Verbose: This is a boolean which is True if you want Holdem Calculator to print the results.
+1. board: These are the community cards supplied to the calculation. This is in the form of a list of strings, with each string representing a card. If you do not want to specify community cards, you can set board to be None. Example: ["As", "Ks", "Jd"]
+2. exact_calculation: This is a boolean which is True if you want an exact calculation, and False if you want a Monte Carlo simulation.
+4. num_sims: This is the number of iterations run in the Monte Carlo simulation. Note that this parameter is ignored if Exact is set to True. This number must be positive, even if Exact is set to true.
+5. Input File: The name of the input file you want Holdem Calculator to read from. Mark as None, if you do not wish to read from a file. **If Input File is set, library calls will not return anything.**
+4. hero_hand: This is an object of the type Combo (part of Poker.Hand), which represents the Player's hand
+3. villan_hand: This is an object of the type Combo (part of Poker.Hand). None if no prior knowledge is known about the villan
+7. verbose: This is a boolean which is True if you want Holdem Calculator to return the odds of the villan making a certain poker hand, e.g., quads, set, straight. It only supports heads-up scenario.
+8. print_elapsed_time: This is a boolean which is True if you want to return elapsed time for calculation
 
-Calls to calculate() return a list of floats. The first element in the list corresponds to the probability that a tie takes place. Each element after that corresponds to the probability one of the hole cards the user provides wins the hand. These probabilities occur in the order in which you list them.
+Calls to calculate_odds_villan() returns a list with two elements. The first is a dictionary with values of type float which contains the odds of the Player to win/tie/lose. The second element of the list is returned if verbose is set to True and it returns the odds of the villan making a certain poker hand, e.g., quads, set, straight. It only supports heads-up scenario.
 
+	from poker.hand import Combo
 
-	$ cat example.py
 	import holdem_calc
-	import parallel_holdem_calc
+	import holdem_functions
+	
+	board = ["Qc", "Th", "9s"]
+	villan_hand = None
+	exact_calculation = True
+	verbose = True
+	num_sims = 1
+	read_from_file = None
 
-	print holdem_calc.calculate(["As", "Ks", "Jd"], True, 1, None, ["8s", "7s", "Qc", "Th"], False)
-	print parallel_holdem_calc.calculate(None, True, 1, None, ["8s", "7s", "Ad", "Ac"], False)
+	odds = holdem_calc.calculate_odds_villan(board, exact_calculation, 
+                            num_sims, read_from_file , 
+                            hero_hand, villan_hand, 
+                            verbose, print_elapsed_time = True)
 
 	$ python example.py
 	[0.00404040404040404, 0.36363636363636365, 0.6323232323232323]
 	[0.0029375624889038396, 0.2287397564918379, 0.7683226810192583]
 
-## Implementation Notes
+## Notebook
+
+[Night at the Venetian](https://github.com/souzatharsis/holdem_calc/blob/master/Night%20at%20the%20venetian.ipynb) is a Jupyter Notebook which demonstrates the library's usage.
+
+In this notebook, we show how to represent basic poker elements in Python, e.g., Hands and Combos, and how to calculate poker odds, i.e., likelihood of win/tie/lose in No-Limit Texas Hold'em. We provide a practical analysis based on a real story in a Night at the Venetian in Las Vegas.
