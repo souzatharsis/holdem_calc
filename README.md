@@ -30,18 +30,27 @@ Calls to calculate_odds_villan() returns a list with two elements. The first is 
 	verbose = True
 	num_sims = 1
 	read_from_file = None
+	
+	hero_hand = Combo('KsJc')
 
 	odds = holdem_calc.calculate_odds_villan(board, exact_calculation, 
                             num_sims, read_from_file , 
                             hero_hand, villan_hand, 
                             verbose, print_elapsed_time = True)
 
-	$ python example.py
-	[0.00404040404040404, 0.36363636363636365, 0.6323232323232323]
-	[0.0029375624889038396, 0.2287397564918379, 0.7683226810192583]
+	> print(odds[0])
+	
+	{'tie': 0.04138424018164999,
+ 	'win': 0.9308440557284221,
+ 	'lose': 0.027771704089927955}
 
 ## Notebook
 
 [Night at the Venetian](https://github.com/souzatharsis/holdem_calc/blob/master/Night%20at%20the%20venetian.ipynb) is a Jupyter Notebook which demonstrates the library's usage.
 
 In this notebook, we show how to represent basic poker elements in Python, e.g., Hands and Combos, and how to calculate poker odds, i.e., likelihood of win/tie/lose in No-Limit Texas Hold'em. We provide a practical analysis based on a real story in a Night at the Venetian in Las Vegas.
+
+## Backlog
+
+1. Add multiplayer support when verbose = True
+2. Port holdem_calc from string-based to proper Poker.Hand entities (Hand, Combo, Range) elements
