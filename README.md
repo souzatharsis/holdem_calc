@@ -5,7 +5,16 @@ The Holdem Calculator library calculates the probability that a certain Texas Ho
 
 This repository extends the implementation from ktseng/holdem_calc as it allows for odds calculation for poker hand ranges by levering the Python package **poker** which provides a framework for poker-related operations and entities such as Hands, Combos and Ranges.
 
+## Supporting Material
+
+[How to Calculate Poker Probabilities in Python](https://towardsdatascience.com/how-to-calculate-poker-probabilities-in-python-75238c61421e) is an article I published in Towards Data Science, which demonstrates the library's usage.
+
+In this article, we show how to represent basic poker elements in Python, e.g., Hands and Combos, and how to calculate poker odds, i.e., likelihood of win/tie/lose in No-Limit Texas Hold'em. We provide a practical analysis based on a real story in a Night at the Venetian in Las Vegas.
+
+[Here](https://github.com/souzatharsis/holdem_calc/blob/master/Night%20at%20the%20venetian.ipynb) is a corresponding Jupyter Notebook.
+
 ## Usage
+
 If you want to use Holdem Calculator as a library, you can import holdem_calc and call calculate_odds_villan(). The order of arguments to calculate_odds_villan() are as follows:
 
 1. board: These are the community cards supplied to the calculation. This is in the form of a list of strings, with each string representing a card. If you do not want to specify community cards, you can set board to be None. Example: ["As", "Ks", "Jd"]
@@ -44,13 +53,7 @@ Calls to calculate_odds_villan() returns a list with two elements. The first is 
  	'win': 0.9308440557284221,
  	'lose': 0.027771704089927955}
 
-## Notebook
-
-[Night at the Venetian](https://github.com/souzatharsis/holdem_calc/blob/master/Night%20at%20the%20venetian.ipynb) is a Jupyter Notebook which demonstrates the library's usage.
-
-In this notebook, we show how to represent basic poker elements in Python, e.g., Hands and Combos, and how to calculate poker odds, i.e., likelihood of win/tie/lose in No-Limit Texas Hold'em. We provide a practical analysis based on a real story in a Night at the Venetian in Las Vegas.
-
 ## Backlog
 
 1. Add multiplayer support when verbose = True
-2. Port holdem_calc from string-based to proper Poker.Hand objects (Hand, Combo, Range)
+2. Port holdem_calc from string-based to support proper Poker.Hand objects (Hand, Combo, Range)
